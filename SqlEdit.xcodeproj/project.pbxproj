@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		212BB87A1EDAC7BB003055C4 /* SqlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212BB8791EDAC7BB003055C4 /* SqlViewController.swift */; };
 		21B13C691EDAC5600005F8EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B13C681EDAC5600005F8EB /* AppDelegate.swift */; };
-		21B13C6B1EDAC5600005F8EB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B13C6A1EDAC5600005F8EB /* ViewController.swift */; };
 		21B13C6D1EDAC5600005F8EB /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B13C6C1EDAC5600005F8EB /* Document.swift */; };
 		21B13C6F1EDAC5600005F8EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21B13C6E1EDAC5600005F8EB /* Assets.xcassets */; };
 		21B13C721EDAC5600005F8EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21B13C701EDAC5600005F8EB /* Main.storyboard */; };
 		21B13C7D1EDAC5600005F8EB /* SqlEditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B13C7C1EDAC5600005F8EB /* SqlEditTests.swift */; };
 		21B13C881EDAC5600005F8EB /* SqlEditUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B13C871EDAC5600005F8EB /* SqlEditUITests.swift */; };
+		21F5C0501EDC9136001C06AE /* SqlStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5C04F1EDC9136001C06AE /* SqlStatement.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,9 +35,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		212BB8791EDAC7BB003055C4 /* SqlViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqlViewController.swift; sourceTree = "<group>"; };
 		21B13C651EDAC5600005F8EB /* SqlEdit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SqlEdit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21B13C681EDAC5600005F8EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		21B13C6A1EDAC5600005F8EB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		21B13C6C1EDAC5600005F8EB /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		21B13C6E1EDAC5600005F8EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		21B13C711EDAC5600005F8EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -47,6 +48,7 @@
 		21B13C831EDAC5600005F8EB /* SqlEditUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SqlEditUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		21B13C871EDAC5600005F8EB /* SqlEditUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqlEditUITests.swift; sourceTree = "<group>"; };
 		21B13C891EDAC5600005F8EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		21F5C04F1EDC9136001C06AE /* SqlStatement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqlStatement.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,8 +100,9 @@
 			isa = PBXGroup;
 			children = (
 				21B13C681EDAC5600005F8EB /* AppDelegate.swift */,
-				21B13C6A1EDAC5600005F8EB /* ViewController.swift */,
 				21B13C6C1EDAC5600005F8EB /* Document.swift */,
+				212BB8791EDAC7BB003055C4 /* SqlViewController.swift */,
+				21F5C04F1EDC9136001C06AE /* SqlStatement.swift */,
 				21B13C6E1EDAC5600005F8EB /* Assets.xcassets */,
 				21B13C701EDAC5600005F8EB /* Main.storyboard */,
 				21B13C731EDAC5600005F8EB /* Info.plist */,
@@ -261,8 +264,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				21B13C6B1EDAC5600005F8EB /* ViewController.swift in Sources */,
+				212BB87A1EDAC7BB003055C4 /* SqlViewController.swift in Sources */,
 				21B13C691EDAC5600005F8EB /* AppDelegate.swift in Sources */,
+				21F5C0501EDC9136001C06AE /* SqlStatement.swift in Sources */,
 				21B13C6D1EDAC5600005F8EB /* Document.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -511,6 +515,7 @@
 				21B13C8E1EDAC5600005F8EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		21B13C8F1EDAC5600005F8EB /* Build configuration list for PBXNativeTarget "SqlEditTests" */ = {
 			isa = XCConfigurationList;
@@ -519,6 +524,7 @@
 				21B13C911EDAC5600005F8EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		21B13C921EDAC5600005F8EB /* Build configuration list for PBXNativeTarget "SqlEditUITests" */ = {
 			isa = XCConfigurationList;
@@ -527,6 +533,7 @@
 				21B13C941EDAC5600005F8EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class SqlViewController: NSViewController
+class SqlViewController: NSViewController, NSTextViewDelegate
 {
 	@IBOutlet var sqlTextView: NSTextView!
 
@@ -18,6 +18,10 @@ class SqlViewController: NSViewController
 	{
         super.viewDidLoad()
         // Do view setup here.
+		sqlTextView.isContinuousSpellCheckingEnabled = false
+		sqlTextView.isGrammarCheckingEnabled = false
+		sqlTextView.isRulerVisible = false
+
     }
 
 	override var representedObject: Any?

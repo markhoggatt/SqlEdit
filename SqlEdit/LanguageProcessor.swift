@@ -10,6 +10,8 @@ import Foundation
 
 public class LanguageProcessor
 {
+	private var _keyWords = Trie()
+
 	public func ProcessReservedWords() -> Bool
 	{
 		guard let resvdPath = Bundle.main.path(forResource: "sqlReserved_9.6.3", ofType: "txt")
@@ -38,7 +40,12 @@ public class LanguageProcessor
 
 	func ExtractReservedWord(line : String)
 	{
-		let wrdDef : [String] = line.components(separatedBy: .whitespaces)
+		let wrdDefs : [String] = line.components(separatedBy: .whitespaces)
+		_keyWords.insert(word: wrdDefs[0])
+	}
 
+	public func IsWordFound(refWord : String) -> Bool
+	{
+		return _keyWords.contains(word: refWord)
 	}
 }

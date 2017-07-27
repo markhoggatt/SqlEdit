@@ -22,33 +22,33 @@ class SqlEditTests: XCTestCase
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
-    func testCanProcessReservedWords()
+
+	func testTypeOneChar()
 	{
-		let lp = LanguageProcessor()
-		let processedOk : Bool = lp.ProcessReservedWords()
-		assert(processedOk == true, "Failed to process reserved words.")
+		let vc = SqlViewController()
+		let editRange = NSMakeRange(0, 1)
+		vc.updateSqlStatements(processedText : "s", editedRange : editRange, lastDelta : 1)
+		assert(vc.currentStatement.statementText.characters.count == 1)
+		assert(NSEqualRanges(editRange, vc.currentStatement.statementRange) == true)
 	}
 
-	func testCanFindWordsInTrie()
+	func testTypeMultipleChar()
 	{
-		let lp = LanguageProcessor()
-		let processedOk : Bool = lp.ProcessReservedWords()
-		assert(processedOk == true, "Failed to process reserved words prior to search.")
-
-		let searchTerms = [String](arrayLiteral: "select", "from", "where", "drop", "insert", "update", "delete")
-		for term : String in searchTerms
-		{
-			let foundOk = lp.IsWordFound(refWord: term)
-			assert(foundOk == true)
-		}
-
-		let wrongTerms = [String](arrayLiteral: "solect", "fron", "whire", "drip", "insest", "ipdate", "delate")
-		for term : String in wrongTerms
-		{
-			let foundOk = lp.IsWordFound(refWord: term)
-			assert(foundOk == false)
-		}
+		let vc = SqlViewController()
+		assert(NSEqualRanges(NSMakeRange(0, 0), vc.currentStatement.statementRange) == true)
+		vc.updateSqlStatements(processedText : "s", editedRange : NSMakeRange(0, 1), lastDelta : 1)
+		assert(vc.currentStatement.statementText.characters.count == 1)
+		vc.updateSqlStatements(processedText : "se", editedRange : NSMakeRange(1, 1), lastDelta : 1)
+		assert(vc.currentStatement.statementText.characters.count == 2)
+		vc.updateSqlStatements(processedText : "sel", editedRange : NSMakeRange(2, 1), lastDelta : 1)
+		assert(vc.currentStatement.statementText.characters.count == 3)
+		vc.updateSqlStatements(processedText : "sele", editedRange : NSMakeRange(3, 1), lastDelta : 1)
+		assert(vc.currentStatement.statementText.characters.count == 4)
+		vc.updateSqlStatements(processedText : "selec", editedRange : NSMakeRange(4, 1), lastDelta : 1)
+		assert(vc.currentStatement.statementText.characters.count == 5)
+		vc.updateSqlStatements(processedText : "select", editedRange : NSMakeRange(5, 1), lastDelta : 1)
+		assert(vc.currentStatement.statementText.characters.count == 6)
+		assert(NSEqualRanges(NSMakeRange(0, 6), vc.currentStatement.statementRange) == true)
 	}
     
     func testPerformanceExample()

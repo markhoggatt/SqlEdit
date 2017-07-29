@@ -54,7 +54,7 @@ class SqlViewController: NSViewController, NSTextStorageDelegate
 	{
 		if lastDelta < 0
 		{
-			let removedOk : Bool = currentStatement.removeCharacterFromStatement()
+			let removedOk : Bool = currentStatement.removeCharacterFromStatement(droppingLast: lastDelta)
 			if removedOk
 			{
 				if currentStatement.isEmpty == false
@@ -80,12 +80,12 @@ class SqlViewController: NSViewController, NSTextStorageDelegate
 			return
 		}
 
-		let newChar : Character = processedText.characters.last!
-		currentStatement.addCharacterToStatement(nextChar: newChar, withRange: editedRange)
+		let newChars : String = String(processedText.characters.suffix(lastDelta))
+		currentStatement.addCharactersToStatement(nextChars: newChars, withRange: editedRange)
 
 		if currentStatement.isNewWord
 		{
-			if langProc.IsWordFound(refWord: currentStatement.lastWord)
+			if currentStatement.lastWord.foundInList
 			{
 				// TODO: Change the text colour here
 			}

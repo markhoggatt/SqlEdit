@@ -20,8 +20,10 @@ class SqlStatement : Hashable
 	}
 
 	var lastWordIdx : String.Index = "".startIndex
-	var lastWord : String = ""
+	var lastWord  = SqlWord(word : "", wordRange : NSMakeRange(0, 0), foundInList : false)
 	var isNewWord : Bool = false
+
+	var wordList = [SqlWord]()
 
 	init(statement : String)
 	{
@@ -40,38 +42,46 @@ class SqlStatement : Hashable
 		return lhs.statementText == rhs.statementText
 	}
 
-	public func removeCharacterFromStatement() -> Bool
+	public func removeCharacterFromStatement(droppingLast: Int) -> Bool
 	{
-		var startCount = statementText.characters.count
+		let startCount = statementText.characters.count
 		guard startCount > 0
 		else
 		{
 			return false
 		}
 
-		statementText.characters.remove(at: statementText.index(before: statementText.endIndex))
-		startCount -= 1
+		guard (droppingLast + startCount) >= 0
+		else
+		{
+			return false
+		}
+
+		let startIdx : String.Index = statementText.index(statementText.endIndex, offsetBy: droppingLast)
+		let truncateRange : Range<String.Index> = startIdx..<statementText.endIndex
+		statementText.removeSubrange(truncateRange)
 
 		if isComplete
 		{
 			isComplete = false
 		}
 
+		statementRange = NSMakeRange(statementRange.location, statementRange.length + droppingLast)
+
 		return true
 	}
 
-	public func addCharacterToStatement(nextChar : Character, withRange : NSRange)
+	public func addCharactersToStatement(nextChars : String, withRange : NSRange)
 	{
-		statementText.characters.append(nextChar)
-		switch nextChar
+		statementText.append(nextChars)
+		switch nextChars
 		{
 			case ";":
 				isComplete = true
 				isNewWord = true
 
 			case " ":
-				lastWord = statementText.substring(from: lastWordIdx)
-				lastWordIdx = statementText.endIndex
+				lastWord = createNewWord(fromRange: withRange)
 				isNewWord = true
 
 			default:
@@ -79,5 +89,10 @@ class SqlStatement : Hashable
 		}
 
 		statementRange = NSUnionRange(statementRange, withRange)
+	}
+
+	private func createNewWord(fromRange : NSRange) -> SqlWord
+	{
+		return lastWord
 	}
 }

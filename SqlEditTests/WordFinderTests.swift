@@ -27,27 +27,27 @@ class WordFinderTests: XCTestCase
 	{
 		let lp = LanguageProcessor()
 		let processedOk : Bool = lp.ProcessReservedWords()
-		assert(processedOk == true, "Failed to process reserved words.")
+		XCTAssertTrue(processedOk, "Failed to process reserved words.")
 	}
 
 	func testCanFindWordsInTrie()
 	{
 		let lp = LanguageProcessor()
 		let processedOk : Bool = lp.ProcessReservedWords()
-		assert(processedOk == true, "Failed to process reserved words prior to search.")
+		XCTAssertTrue(processedOk, "Failed to process reserved words prior to search.")
 
 		let searchTerms = [String](arrayLiteral: "select", "from", "where", "drop", "insert", "update", "delete")
 		for term : String in searchTerms
 		{
 			let foundOk = lp.IsWordFound(refWord: term)
-			assert(foundOk == true)
+			XCTAssertTrue(foundOk)
 		}
 
 		let wrongTerms = [String](arrayLiteral: "solect", "fron", "whire", "drip", "insest", "ipdate", "delate")
 		for term : String in wrongTerms
 		{
 			let foundOk = lp.IsWordFound(refWord: term)
-			assert(foundOk == false)
+			XCTAssertFalse(foundOk)
 		}
 	}
 
@@ -55,7 +55,7 @@ class WordFinderTests: XCTestCase
 	{
 		let lp = LanguageProcessor()
 		let processedOk : Bool = lp.ProcessReservedWords()
-		assert(processedOk == true, "Failed to process reserved words prior to performance test.")
+		XCTAssertTrue(processedOk, "Failed to process reserved words prior to performance test.")
 
 		let searchTerms = [String](arrayLiteral: "select", "from", "where", "drop", "insert", "update", "delete")
 
@@ -64,7 +64,7 @@ class WordFinderTests: XCTestCase
 			for term : String in searchTerms
 			{
 				let foundOk = lp.IsWordFound(refWord: term)
-				assert(foundOk == true)
+				XCTAssertTrue(foundOk)
 			}
         }
     }

@@ -21,6 +21,7 @@
 		21DC312A1F1D5A9C001E04BD /* TrieNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DC31291F1D5A9C001E04BD /* TrieNode.swift */; };
 		21F5C0501EDC9136001C06AE /* SqlStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5C04F1EDC9136001C06AE /* SqlStatement.swift */; };
 		BE9A28FD1F29FBB7007E6715 /* WordFinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9A28FC1F29FBB7007E6715 /* WordFinderTests.swift */; };
+		BEB089A41F2BA3FA0091FBC7 /* SqlWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB089A31F2BA3FA0091FBC7 /* SqlWord.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		21DC31291F1D5A9C001E04BD /* TrieNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrieNode.swift; sourceTree = "<group>"; };
 		21F5C04F1EDC9136001C06AE /* SqlStatement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqlStatement.swift; sourceTree = "<group>"; };
 		BE9A28FC1F29FBB7007E6715 /* WordFinderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordFinderTests.swift; sourceTree = "<group>"; };
+		BEB089A31F2BA3FA0091FBC7 /* SqlWord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqlWord.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 				21B13C6C1EDAC5600005F8EB /* Document.swift */,
 				212BB8791EDAC7BB003055C4 /* SqlViewController.swift */,
 				21F5C04F1EDC9136001C06AE /* SqlStatement.swift */,
+				BEB089A31F2BA3FA0091FBC7 /* SqlWord.swift */,
 				214C7E251F1B5F1F003938C5 /* LanguageProcessor.swift */,
 				21DC31291F1D5A9C001E04BD /* TrieNode.swift */,
 				21126DA41F1E7ED900460C7C /* Trie.swift */,
@@ -296,6 +299,7 @@
 				21DC312A1F1D5A9C001E04BD /* TrieNode.swift in Sources */,
 				21B13C691EDAC5600005F8EB /* AppDelegate.swift in Sources */,
 				21126DA51F1E7ED900460C7C /* Trie.swift in Sources */,
+				BEB089A41F2BA3FA0091FBC7 /* SqlWord.swift in Sources */,
 				21F5C0501EDC9136001C06AE /* SqlStatement.swift in Sources */,
 				21B13C6D1EDAC5600005F8EB /* Document.swift in Sources */,
 				214C7E261F1B5F1F003938C5 /* LanguageProcessor.swift in Sources */,

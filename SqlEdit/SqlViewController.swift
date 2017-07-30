@@ -14,7 +14,6 @@ class SqlViewController: NSViewController, NSTextStorageDelegate
 
 	var statements : [SqlStatement] = [SqlStatement]()
 	var currentStatement : SqlStatement = SqlStatement(statement: "")
-	let langProc = LanguageProcessor()
 
     override func viewDidLoad()
 	{
@@ -31,6 +30,7 @@ class SqlViewController: NSViewController, NSTextStorageDelegate
 			statements.append(currentStatement)
 		}
 
+		let langProc = LanguageProcessor.Instance()
 		if langProc.ProcessReservedWords() == false
 		{
 			NSLog("Failed to load SQL word dictionary.")

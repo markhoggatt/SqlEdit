@@ -12,14 +12,17 @@ class SqlStatement : Hashable
 {
 	var statementText : String
 	var statementRange : NSRange
-	var lastWordRange : NSRange = NSMakeRange(0, 0)
 	var isComplete : Bool
 	var isEmpty : Bool
 	{
 		return statementText.characters.count <= 0
 	}
 
-	var lastWordIdx : String.Index = "".startIndex
+	var wordCount : Int
+	{
+		return wordList.count
+	}
+
 	var lastWord  = SqlWord(word : "", wordRange : NSMakeRange(0, 0), foundInList : false)
 	var isNewWord : Bool = false
 
@@ -73,19 +76,25 @@ class SqlStatement : Hashable
 
 	public func addCharactersToStatement(nextChars : String, withRange : NSRange)
 	{
-		statementText.append(nextChars)
-		switch nextChars
+		var chRange : NSRange = NSMakeRange(withRange.location, 0)
+		for ch : Character in nextChars.characters
 		{
+			statementText.append(ch)
+			chRange.length += 1
+			switch ch
+			{
 			case ";":
 				isComplete = true
 				isNewWord = true
 
 			case " ":
-				lastWord = createNewWord(fromRange: withRange)
+				lastWord = createNewWord(fromRange: chRange)
+				wordList.append(lastWord)
 				isNewWord = true
 
 			default:
 				isNewWord = false
+			}
 		}
 
 		statementRange = NSUnionRange(statementRange, withRange)
@@ -93,6 +102,21 @@ class SqlStatement : Hashable
 
 	private func createNewWord(fromRange : NSRange) -> SqlWord
 	{
-		return lastWord
+		let wordStartPos : Int = NSMaxRange(lastWord.wordRange)
+		var wordLength : Int = fromRange.location - wordStartPos
+		var wordRange : NSRange = NSMakeRange(wordStartPos, wordLength)
+		let wordTextStartIdx : String.Index = statementText.index(statementText.startIndex, offsetBy: wordStartPos)
+		let wordTextRange : Range<String.Index> = wordTextStartIdx..<statementText.endIndex
+		let wordText : String = statementText.substring(with: wordTextRange).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+
+		wordLength = wordText.characters.count
+		wordRange.length = wordLength
+
+		let langProc : LanguageProcessor = LanguageProcessor.Instance()
+		let isInList : Bool = langProc.IsWordFound(refWord: wordText)
+
+		let nextWord = SqlWord(word : wordText, wordRange : wordRange, foundInList : isInList)
+
+		return nextWord
 	}
 }

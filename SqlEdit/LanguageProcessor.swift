@@ -8,9 +8,16 @@
 
 import Foundation
 
+private let _langProc : LanguageProcessor = LanguageProcessor()
+
 public class LanguageProcessor
 {
 	private var _keyWords = Trie()
+
+	public class func Instance() -> LanguageProcessor
+	{
+		return _langProc
+	}
 
 	public func ProcessReservedWords() -> Bool
 	{

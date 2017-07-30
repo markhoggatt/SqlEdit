@@ -106,6 +106,26 @@ class SqlEditTests: XCTestCase
 		XCTAssertEqual(vc.currentStatement.statementText.characters.count, 6)
 		XCTAssertTrue(NSEqualRanges(NSMakeRange(0, 6), vc.currentStatement.statementRange))
 
-		vc.updateSqlStatements(processedText : "select ", editedRange : NSMakeRange(7, 1), lastDelta : 1)
+		vc.updateSqlStatements(processedText : "select ", editedRange : NSMakeRange(6, 1), lastDelta : 1)
+		XCTAssertTrue(NSEqualRanges(NSMakeRange(0, 7), vc.currentStatement.statementRange))
+		XCTAssertEqual(1, vc.currentStatement.wordCount)
+	}
+
+	func testTypeMultipleWords()
+	{
+		let vc = SqlViewController()
+		XCTAssertTrue(NSEqualRanges(NSMakeRange(0, 0), vc.currentStatement.statementRange))
+		vc.updateSqlStatements(processedText : "select", editedRange : NSMakeRange(0, 6), lastDelta : 6)
+
+		XCTAssertEqual(vc.currentStatement.statementText.characters.count, 6)
+		XCTAssertTrue(NSEqualRanges(NSMakeRange(0, 6), vc.currentStatement.statementRange))
+
+		vc.updateSqlStatements(processedText : "select ", editedRange : NSMakeRange(6, 1), lastDelta : 1)
+		XCTAssertTrue(NSEqualRanges(NSMakeRange(0, 7), vc.currentStatement.statementRange))
+		XCTAssertEqual(1, vc.currentStatement.wordCount)
+
+		vc.updateSqlStatements(processedText: "select * ", editedRange: NSMakeRange(7, 2), lastDelta: 2)
+		XCTAssertTrue(NSEqualRanges(NSMakeRange(0, 9), vc.currentStatement.statementRange))
+		XCTAssertEqual(2, vc.currentStatement.wordCount)
 	}
 }

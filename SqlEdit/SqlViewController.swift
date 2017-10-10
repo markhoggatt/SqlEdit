@@ -24,7 +24,7 @@ class SqlViewController: NSViewController, NSTextStorageDelegate
 		sqlTextView.isRulerVisible = false
 		sqlTextView.textStorage?.delegate = self
 		
-		currentStatement.statementText = sqlTextView.string ?? ""
+		currentStatement.statementText = sqlTextView.string
 		if statements.count == 0
 		{
 			statements.append(currentStatement)
@@ -107,6 +107,6 @@ class SqlViewController: NSViewController, NSTextStorageDelegate
 	{
 		let textStore = sqlTextView.textStorage!
 
-		textStore.setAttributes([NSForegroundColorAttributeName : colour], range: range)
+		textStore.setAttributes([NSAttributedStringKey.foregroundColor : colour], range: range)
 	}
 }

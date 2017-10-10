@@ -106,8 +106,7 @@ class SqlStatement : Hashable
 		var wordLength : Int = fromRange.location - wordStartPos
 		var wordRange : NSRange = NSMakeRange(wordStartPos, wordLength)
 		let wordTextStartIdx : String.Index = statementText.index(statementText.startIndex, offsetBy: wordStartPos)
-		let wordTextRange : Range<String.Index> = wordTextStartIdx..<statementText.endIndex
-		let wordText : String = statementText.substring(with: wordTextRange).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+		let wordText : String = statementText[wordTextStartIdx..<statementText.endIndex].trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
 		wordLength = wordText.characters.count
 		wordRange.length = wordLength

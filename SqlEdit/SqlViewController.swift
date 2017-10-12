@@ -93,7 +93,6 @@ class SqlViewController: NSViewController, NSTextStorageDelegate
 
 		if currentStatement.isComplete
 		{
-			currentStatement = SqlStatement(statement: "")
 			statements.append(currentStatement)
 		}
 	}

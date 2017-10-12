@@ -28,11 +28,14 @@ class SqlStatement : Hashable
 
 	var wordList = [SqlWord]()
 
+	var delimitingSet : CharacterSet = CharacterSet.whitespacesAndNewlines
+
 	init(statement : String)
 	{
 		statementText = statement
 		statementRange = NSMakeRange(0, 0)
 		isComplete = false
+		delimitingSet.insert(charactersIn: ";")
 	}
 
 	var hashValue: Int
@@ -60,16 +63,23 @@ class SqlStatement : Hashable
 			return false
 		}
 
-		let startIdx : String.Index = statementText.index(statementText.endIndex, offsetBy: droppingLast)
-		let truncateRange : Range<String.Index> = startIdx..<statementText.endIndex
-		statementText.removeSubrange(truncateRange)
-
-		if isComplete
+		let charToDrop : Int = -1
+		var currentlyNewWord : Bool = false
+		for _ in droppingLast..<0
 		{
-			isComplete = false
-		}
+			currentlyNewWord = isNewWord
+			isNewWord = statementText.characters.last == " "
 
-		statementRange = NSMakeRange(statementRange.location, statementRange.length + droppingLast)
+			let startIdx : String.Index = statementText.index(statementText.endIndex, offsetBy: charToDrop)
+			let truncateRange : Range<String.Index> = startIdx..<statementText.endIndex
+			statementText.removeSubrange(truncateRange)
+			statementRange = NSMakeRange(statementRange.location, statementRange.length + charToDrop)
+
+			if currentlyNewWord && isNewWord == false
+			{
+				wordList.removeLast()
+			}
+		}
 
 		return true
 	}
@@ -85,12 +95,16 @@ class SqlStatement : Hashable
 			{
 			case ";":
 				isComplete = true
+				lastWord = createNewWord(fromRange: chRange)
+				wordList.append(lastWord)
 				isNewWord = true
+				chRange = pinNextRange(sourceRange: chRange)
 
 			case " ":
 				lastWord = createNewWord(fromRange: chRange)
 				wordList.append(lastWord)
 				isNewWord = true
+				chRange = pinNextRange(sourceRange: chRange)
 
 			default:
 				isNewWord = false
@@ -102,11 +116,12 @@ class SqlStatement : Hashable
 
 	private func createNewWord(fromRange : NSRange) -> SqlWord
 	{
-		let wordStartPos : Int = NSMaxRange(lastWord.wordRange)
-		var wordLength : Int = fromRange.location - wordStartPos
+		let wordStartPos : Int = fromRange.location
+		// Reduce by the delimiter
+		var wordLength : Int = fromRange.length - 1
 		var wordRange : NSRange = NSMakeRange(wordStartPos, wordLength)
 		let wordTextStartIdx : String.Index = statementText.index(statementText.startIndex, offsetBy: wordStartPos)
-		let wordText : String = statementText[wordTextStartIdx..<statementText.endIndex].trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+		let wordText : String = statementText[wordTextStartIdx..<statementText.endIndex].trimmingCharacters(in: delimitingSet)
 
 		wordLength = wordText.characters.count
 		wordRange.length = wordLength
@@ -117,5 +132,12 @@ class SqlStatement : Hashable
 		let nextWord = SqlWord(word : wordText, wordRange : wordRange, foundInList : isInList)
 
 		return nextWord
+	}
+
+	private func pinNextRange(sourceRange : NSRange) -> NSRange
+	{
+		let newLocation : Int = sourceRange.location + sourceRange.length
+
+		return NSMakeRange(newLocation, 0)
 	}
 }

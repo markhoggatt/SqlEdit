@@ -149,4 +149,25 @@ class SqlEditTests: XCTestCase
 		XCTAssertEqual(vc.currentStatement.statementText.characters.count, 9)
 		XCTAssertEqual(vc.currentStatement.wordCount, 2)
 	}
+
+	func testPartialWordDelete()
+	{
+		let vc = SqlViewController()
+		XCTAssertTrue(NSEqualRanges(NSMakeRange(0, 0), vc.currentStatement.statementRange))
+
+		vc.updateSqlStatements(processedText: "select * from TestTable;", editedRange: NSMakeRange(0, 24), lastDelta: 24)
+		XCTAssertTrue(NSEqualRanges(NSMakeRange(0, 24), vc.currentStatement.statementRange))
+		XCTAssertEqual(vc.currentStatement.statementText.characters.count, 24)
+		XCTAssertEqual(vc.currentStatement.wordCount, 4)
+
+		vc.updateSqlStatements(processedText: "select * from Test", editedRange: NSMakeRange(0, 18), lastDelta: -6)
+		XCTAssertTrue(NSEqualRanges(NSMakeRange(0, 18), vc.currentStatement.statementRange))
+		XCTAssertEqual(vc.currentStatement.statementText.characters.count, 18)
+		XCTAssertEqual(vc.currentStatement.wordCount, 3)
+
+		vc.updateSqlStatements(processedText: "select * fr", editedRange: NSMakeRange(0, 11), lastDelta: -7)
+		XCTAssertTrue(NSEqualRanges(NSMakeRange(0, 11), vc.currentStatement.statementRange))
+		XCTAssertEqual(vc.currentStatement.statementText.characters.count, 11)
+		XCTAssertEqual(vc.currentStatement.wordCount, 2)
+	}
 }

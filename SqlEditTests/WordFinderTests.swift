@@ -68,4 +68,25 @@ class WordFinderTests: XCTestCase
 			}
         }
     }
+
+	func testPartialMatch()
+	{
+		let lp = LanguageProcessor()
+		let processedOk : Bool = lp.ProcessReservedWords()
+		XCTAssertTrue(processedOk, "Failed to process reserved words prior to partial match test.")
+
+		let isPartialMatch : Bool = lp.IsStringFound(refString: "selec")
+		XCTAssertTrue(isPartialMatch)
+	}
+
+	func testPrefixMatch()
+	{
+		let lp = LanguageProcessor()
+		let processedOk : Bool = lp.ProcessReservedWords()
+		XCTAssertTrue(processedOk, "Failed to process reserved words prior to last word in trie test.")
+
+		let matched : [String] = lp.WordsMatchingPrefix(prefix: "comm")
+		XCTAssertNotNil(matched)
+		XCTAssertGreaterThan(matched.count, 0)
+	}
 }

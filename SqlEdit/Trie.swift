@@ -119,7 +119,7 @@ class Trie
 	/// Walks the nodes to find if the reference word exists and is terminating.
 	///
 	/// - Parameter word: The word to verify
-	/// - Returns: The last node to complet the word if it is ternating, otherwise nil.
+	/// - Returns: The last node to complete the word if it is ternating, otherwise nil.
 	func findTerminalNodeOf(word : String) -> TrieNode<Character>?
 	{
 		if let lastNode : TrieNode<Character>  = findLastNodeOf(word: word)

@@ -16,10 +16,6 @@ class TrieNode<T : Hashable>
 	weak var parentNode : TrieNode?
 	var children : [T : TrieNode] = [:]
 	var isTerminating : Bool = false
-	var isLeaf : Bool
-	{
-		return children.count == 0
-	}
 
 	// Initialiser - normally used by the root at start.
 	init()

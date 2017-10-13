@@ -55,4 +55,14 @@ public class LanguageProcessor
 	{
 		return _keyWords.contains(word: refWord)
 	}
+
+	public func IsStringFound(refString : String) -> Bool
+	{
+		return _keyWords.findLastNodeOf(word: refString) != nil
+	}
+
+	public func WordsMatchingPrefix(prefix : String) -> [String]
+	{
+		return _keyWords.findWordsWithPrefix(prefix: prefix)
+	}
 }

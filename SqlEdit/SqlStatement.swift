@@ -95,16 +95,10 @@ class SqlStatement : Hashable
 			{
 			case ";":
 				isComplete = true
-				lastWord = createNewWord(fromRange: chRange)
-				wordList.append(lastWord)
-				isNewWord = true
-				chRange = pinNextRange(sourceRange: chRange)
+				chRange = completeWord(chRange)
 
 			case " ":
-				lastWord = createNewWord(fromRange: chRange)
-				wordList.append(lastWord)
-				isNewWord = true
-				chRange = pinNextRange(sourceRange: chRange)
+				chRange = completeWord(chRange)
 
 			default:
 				isNewWord = false
@@ -114,7 +108,7 @@ class SqlStatement : Hashable
 		statementRange = NSUnionRange(statementRange, withRange)
 	}
 
-	private func createNewWord(fromRange : NSRange) -> SqlWord
+	fileprivate func createNewWord(fromRange : NSRange) -> SqlWord
 	{
 		let wordStartPos : Int = fromRange.location
 		// Reduce by the delimiter
@@ -134,7 +128,15 @@ class SqlStatement : Hashable
 		return nextWord
 	}
 
-	private func pinNextRange(sourceRange : NSRange) -> NSRange
+	fileprivate func completeWord(_ chRange: NSRange) -> NSRange
+	{
+		lastWord = createNewWord(fromRange: chRange)
+		wordList.append(lastWord)
+		isNewWord = true
+		return pinNextRange(sourceRange: chRange)
+	}
+
+	fileprivate func pinNextRange(sourceRange : NSRange) -> NSRange
 	{
 		let newLocation : Int = sourceRange.location + sourceRange.length
 

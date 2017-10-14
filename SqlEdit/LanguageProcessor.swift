@@ -45,12 +45,6 @@ public class LanguageProcessor
 		return true
 	}
 
-	func ExtractReservedWord(line : String)
-	{
-		let wrdDefs : [String] = line.components(separatedBy: .whitespaces)
-		_keyWords.insert(word: wrdDefs[0])
-	}
-
 	public func IsWordFound(refWord : String) -> Bool
 	{
 		return _keyWords.contains(word: refWord)
@@ -64,5 +58,11 @@ public class LanguageProcessor
 	public func WordsMatchingPrefix(prefix : String) -> [String]
 	{
 		return _keyWords.findWordsWithPrefix(prefix: prefix)
+	}
+
+	fileprivate func ExtractReservedWord(line : String)
+	{
+		let wrdDefs : [String] = line.components(separatedBy: .whitespaces)
+		_keyWords.insert(word: wrdDefs[0])
 	}
 }

@@ -57,43 +57,29 @@ class SqlViewController: NSViewController, NSTextStorageDelegate
 			let removedOk : Bool = currentStatement.removeCharacterFromStatement(droppingLast: lastDelta)
 			if removedOk
 			{
-				if currentStatement.isEmpty == false
+				NSLog("Failed to remove characters from statement.")
+			}
+		}
+		else
+		{
+			let newCharsStartIdx : String.Index = processedText.index(processedText.startIndex, offsetBy: editedRange.location)
+			let newCharsEndIdx : String.Index = processedText.index(newCharsStartIdx, offsetBy: lastDelta)
+			let newChars : String = String(processedText[newCharsStartIdx..<newCharsEndIdx])
+
+			currentStatement.addCharactersToStatement(nextChars: newChars, withRange: editedRange)
+
+			if currentStatement.isNewWord
+			{
+				if currentStatement.lastWord.foundInList
 				{
-					return
+					// TODO: Change the text colour here
 				}
 			}
 
-			let statementCount : Int = statements.count
-			switch statementCount
+			if currentStatement.isComplete
 			{
-			case 0:
 				statements.append(currentStatement)
-
-			case 1:
-				break
-
-			default:
-				currentStatement = statements[statementCount - 2]
-				statements.remove(at: statementCount - 1)
 			}
-
-			return
-		}
-
-		let newChars : String = String(processedText.characters.suffix(lastDelta))
-		currentStatement.addCharactersToStatement(nextChars: newChars, withRange: editedRange)
-
-		if currentStatement.isNewWord
-		{
-			if currentStatement.lastWord.foundInList
-			{
-				// TODO: Change the text colour here
-			}
-		}
-
-		if currentStatement.isComplete
-		{
-			statements.append(currentStatement)
 		}
 	}
 

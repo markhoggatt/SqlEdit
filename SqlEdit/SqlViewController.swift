@@ -47,10 +47,10 @@ class SqlViewController: NSViewController, NSTextStorageDelegate
 
 	func textStorage(_ textStorage: NSTextStorage, didProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int)
 	{
-		updateSqlStatements(processedText: textStorage.string, editedRange: editedRange, lastDelta: delta)
+		updateSqlStatements(processedText: textStorage.string, editedRange: Range<Int>(editedRange)!, lastDelta: delta)
 	}
 
-	public func updateSqlStatements(processedText : String, editedRange : NSRange, lastDelta : Int)
+	public func updateSqlStatements(processedText : String, editedRange : Range<Int>, lastDelta : Int)
 	{
 		if lastDelta < 0
 		{
@@ -62,7 +62,7 @@ class SqlViewController: NSViewController, NSTextStorageDelegate
 		}
 		else
 		{
-			let newCharsStartIdx : String.Index = processedText.index(processedText.startIndex, offsetBy: editedRange.location)
+			let newCharsStartIdx : String.Index = processedText.index(processedText.startIndex, offsetBy: editedRange.lowerBound)
 			let newCharsEndIdx : String.Index = processedText.index(newCharsStartIdx, offsetBy: lastDelta)
 			let newChars : String = String(processedText[newCharsStartIdx..<newCharsEndIdx])
 

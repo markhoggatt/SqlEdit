@@ -11,6 +11,6 @@ import Foundation
 struct SqlWord
 {
 	public let word : String
-	public let wordRange : NSRange
+	public let wordRange : Range<Int>
 	public let foundInList : Bool
 }

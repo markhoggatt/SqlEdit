@@ -15,7 +15,7 @@ class SqlStatement : Hashable
 	var isComplete : Bool
 	var isEmpty : Bool
 	{
-		return statementText.characters.count <= 0
+		return statementText.count <= 0
 	}
 
 	var wordCount : Int
@@ -50,7 +50,7 @@ class SqlStatement : Hashable
 
 	public func removeCharacterFromStatement(droppingLast: Int) -> Bool
 	{
-		let startCount = statementText.characters.count
+		let startCount = statementText.count
 		guard startCount > 0
 		else
 		{
@@ -68,7 +68,7 @@ class SqlStatement : Hashable
 		for _ in droppingLast..<0
 		{
 			currentlyNewWord = isNewWord
-			isNewWord = statementText.characters.last == " "
+			isNewWord = statementText.last == " "
 
 			let startIdx : String.Index = statementText.index(statementText.endIndex, offsetBy: charToDrop)
 			let truncateRange : Range<String.Index> = startIdx..<statementText.endIndex
@@ -88,7 +88,7 @@ class SqlStatement : Hashable
 	{
 		var chRange : Range<Int> = withRange.lowerBound..<withRange.lowerBound
 		var chRangeUpper : Int = chRange.upperBound
-		for ch : Character in nextChars.characters
+		for ch : Character in nextChars
 		{
 			statementText.append(ch)
 			chRangeUpper += 1
@@ -124,7 +124,7 @@ class SqlStatement : Hashable
 		let wordTextStartIdx : String.Index = statementText.index(statementText.startIndex, offsetBy: wordStartPos)
 		let wordText : String = statementText[wordTextStartIdx..<statementText.endIndex].trimmingCharacters(in: delimitingSet)
 
-		wordLength = wordText.characters.count
+		wordLength = wordText.count
 		wordRange = wordStartPos..<(wordStartPos + wordLength)
 
 		let langProc : LanguageProcessor = LanguageProcessor.Instance()

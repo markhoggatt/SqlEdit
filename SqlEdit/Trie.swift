@@ -42,7 +42,7 @@ class Trie
 		}
 
 		var currentNode : TrieNode<Character> = root
-		for chr : Character in word.lowercased().characters
+		for chr : Character in word.lowercased()
 		{
 			if let childNode = currentNode.children[chr]
 			{
@@ -79,7 +79,7 @@ class Trie
 		}
 
 		var currentNode : TrieNode<Character> = root
-		for chr : Character in word.lowercased().characters
+		for chr : Character in word.lowercased()
 		{
 			guard let childNode = currentNode.children[chr]
 			else
@@ -101,7 +101,7 @@ class Trie
 	func findLastNodeOf(word : String) -> TrieNode<Character>?
 	{
 		var currentNode : TrieNode<Character> = root
-		for chr : Character in word.lowercased().characters
+		for chr : Character in word.lowercased()
 		{
 			guard let childNode : TrieNode<Character> = currentNode.children[chr]
 			else

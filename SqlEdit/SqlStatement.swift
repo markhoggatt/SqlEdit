@@ -88,9 +88,17 @@ class SqlStatement : Hashable
 	{
 		var chRange : Range<Int> = withRange.lowerBound..<withRange.lowerBound
 		var chRangeUpper : Int = chRange.upperBound
+		let statCount = statementText.count
 		for ch : Character in nextChars
 		{
-			statementText.append(ch)
+			if chRangeUpper < statCount
+			{
+				statementText.insert(ch, at: statementText.index(statementText.startIndex, offsetBy: chRangeUpper))
+			}
+			else
+			{
+				statementText.append(ch)
+			}
 			chRangeUpper += 1
 			chRange = chRange.lowerBound..<chRangeUpper
 			switch ch

@@ -181,6 +181,6 @@ class SqlEditTests: XCTestCase
 		XCTAssertEqual(vc.currentStatement.statementText.count, 24)
 		XCTAssertEqual(vc.currentStatement.wordCount, 4)
 
-		vc.updateSqlStatements(processedText: "select t from TestTable;", editedRange: Range<Int>(7..<8), lastDelta: 1)
+		vc.updateSqlStatements(processedText: "select t from TestTable;", editedRange: Range<Int>(7..<8), lastDelta: 0)
 	}
 }

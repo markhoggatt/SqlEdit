@@ -21,7 +21,7 @@ public class LanguageProcessor
 
 	public func ProcessReservedWords() -> Bool
 	{
-		guard let resvdPath = Bundle.main.path(forResource: "sqlReserved_9.6.3", ofType: "txt")
+		guard let resvdPath = Bundle.main.path(forResource: "sqlReserved_10.4", ofType: "txt")
 		else
 		{
 			return false

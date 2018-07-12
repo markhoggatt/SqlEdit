@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		21126DA51F1E7ED900460C7C /* Trie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21126DA41F1E7ED900460C7C /* Trie.swift */; };
 		212BB87A1EDAC7BB003055C4 /* SqlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212BB8791EDAC7BB003055C4 /* SqlViewController.swift */; };
-		214C7E241F1B5ED9003938C5 /* sqlReserved_9.6.3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 214C7E231F1B5ED9003938C5 /* sqlReserved_9.6.3.txt */; };
+		214C7E241F1B5ED9003938C5 /* sqlReserved_10.4.txt in Resources */ = {isa = PBXBuildFile; fileRef = 214C7E231F1B5ED9003938C5 /* sqlReserved_10.4.txt */; };
 		214C7E261F1B5F1F003938C5 /* LanguageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214C7E251F1B5F1F003938C5 /* LanguageProcessor.swift */; };
-		214C7E281F1C0455003938C5 /* sqlCommands_9.6.3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 214C7E271F1C0455003938C5 /* sqlCommands_9.6.3.txt */; };
+		214C7E281F1C0455003938C5 /* sqlCommands_10.4.txt in Resources */ = {isa = PBXBuildFile; fileRef = 214C7E271F1C0455003938C5 /* sqlCommands_10.4.txt */; };
 		21B13C691EDAC5600005F8EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B13C681EDAC5600005F8EB /* AppDelegate.swift */; };
 		21B13C6D1EDAC5600005F8EB /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B13C6C1EDAC5600005F8EB /* Document.swift */; };
 		21B13C6F1EDAC5600005F8EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21B13C6E1EDAC5600005F8EB /* Assets.xcassets */; };
@@ -45,9 +45,9 @@
 /* Begin PBXFileReference section */
 		21126DA41F1E7ED900460C7C /* Trie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trie.swift; sourceTree = "<group>"; };
 		212BB8791EDAC7BB003055C4 /* SqlViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqlViewController.swift; sourceTree = "<group>"; };
-		214C7E231F1B5ED9003938C5 /* sqlReserved_9.6.3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = sqlReserved_9.6.3.txt; path = SqlEdit/sqlReserved_9.6.3.txt; sourceTree = "<group>"; };
+		214C7E231F1B5ED9003938C5 /* sqlReserved_10.4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = sqlReserved_10.4.txt; path = SqlEdit/sqlReserved_10.4.txt; sourceTree = "<group>"; };
 		214C7E251F1B5F1F003938C5 /* LanguageProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageProcessor.swift; sourceTree = "<group>"; };
-		214C7E271F1C0455003938C5 /* sqlCommands_9.6.3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = sqlCommands_9.6.3.txt; path = SqlEdit/sqlCommands_9.6.3.txt; sourceTree = "<group>"; };
+		214C7E271F1C0455003938C5 /* sqlCommands_10.4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = sqlCommands_10.4.txt; path = SqlEdit/sqlCommands_10.4.txt; sourceTree = "<group>"; };
 		21B13C651EDAC5600005F8EB /* SqlEdit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SqlEdit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21B13C681EDAC5600005F8EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21B13C6C1EDAC5600005F8EB /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
@@ -96,8 +96,8 @@
 		214C7E221F1B5EB9003938C5 /* SundryAssets */ = {
 			isa = PBXGroup;
 			children = (
-				214C7E271F1C0455003938C5 /* sqlCommands_9.6.3.txt */,
-				214C7E231F1B5ED9003938C5 /* sqlReserved_9.6.3.txt */,
+				214C7E271F1C0455003938C5 /* sqlCommands_10.4.txt */,
+				214C7E231F1B5ED9003938C5 /* sqlReserved_10.4.txt */,
 			);
 			name = SundryAssets;
 			sourceTree = "<group>";
@@ -275,9 +275,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				214C7E241F1B5ED9003938C5 /* sqlReserved_9.6.3.txt in Resources */,
+				214C7E241F1B5ED9003938C5 /* sqlReserved_10.4.txt in Resources */,
 				21B13C6F1EDAC5600005F8EB /* Assets.xcassets in Resources */,
-				214C7E281F1C0455003938C5 /* sqlCommands_9.6.3.txt in Resources */,
+				214C7E281F1C0455003938C5 /* sqlCommands_10.4.txt in Resources */,
 				21B13C721EDAC5600005F8EB /* Main.storyboard in Resources */,
 				BE4D9F541F8CEEED006D8117 /* LICENSE in Resources */,
 			);

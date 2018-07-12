@@ -7,11 +7,13 @@
 //
 
 import Cocoa
+import os.log
 
 class SqlViewController: NSViewController, NSTextStorageDelegate
 {
 	@IBOutlet var sqlTextView: NSTextView!
 
+	let logHandle : OSLog = OSLog(subsystem: "eu.hoggatt.SqlEdit", category: "SqlViewController")
 	var statements : [SqlStatement] = [SqlStatement]()
 	var currentStatement : SqlStatement = SqlStatement(statement: "")
 
@@ -33,7 +35,7 @@ class SqlViewController: NSViewController, NSTextStorageDelegate
 		let langProc = LanguageProcessor.Instance()
 		if langProc.ProcessReservedWords() == false
 		{
-			NSLog("Failed to load SQL word dictionary.")
+			os_log("Failed to load SQL word dictionary.")
 		}
     }
 
@@ -57,7 +59,7 @@ class SqlViewController: NSViewController, NSTextStorageDelegate
 			let removedOk : Bool = currentStatement.removeCharacterFromStatement(droppingLast: lastDelta)
 			if removedOk
 			{
-				NSLog("Failed to remove characters from statement.")
+				os_log("Failed to remove characters from statement.")
 			}
 		}
 		else

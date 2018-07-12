@@ -11,21 +11,32 @@ import XCTest
 
 class SqlEditTests: XCTestCase
 {
+	var sqlVc : SqlViewController? = nil
+
     override func setUp()
 	{
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
+		sqlVc = SqlViewController()
     }
     
     override func tearDown()
 	{
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+
+		sqlVc = nil
     }
 
 	func testTypeOneChar()
 	{
-		let vc = SqlViewController()
+		guard let vc : SqlViewController = sqlVc
+		else
+		{
+			XCTFail()
+			return
+		}
+
 		let editRange : Range<Int> = 0..<1
 		vc.updateSqlStatements(processedText : "s", editedRange : editRange, lastDelta : 1)
 		XCTAssertEqual(vc.currentStatement.statementText.count, 1)
@@ -34,7 +45,13 @@ class SqlEditTests: XCTestCase
 
 	func testTypeMultipleChar()
 	{
-		let vc = SqlViewController()
+		guard let vc : SqlViewController = sqlVc
+			else
+		{
+			XCTFail()
+			return
+		}
+
 		XCTAssertEqual(Range<Int>(0..<0), vc.currentStatement.statementRange)
 		vc.updateSqlStatements(processedText : "s", editedRange : Range<Int>(0..<1), lastDelta : 1)
 		XCTAssertEqual(vc.currentStatement.statementText.count, 1)
@@ -53,7 +70,13 @@ class SqlEditTests: XCTestCase
 
 	func testTypeMultipleCharBurst()
 	{
-		let vc = SqlViewController()
+		guard let vc : SqlViewController = sqlVc
+			else
+		{
+			XCTFail()
+			return
+		}
+
 		XCTAssertEqual(Range<Int>(0..<0), vc.currentStatement.statementRange)
 		vc.updateSqlStatements(processedText : "select", editedRange : Range(0..<6), lastDelta : 6)
 
@@ -63,7 +86,13 @@ class SqlEditTests: XCTestCase
 
 	func testDeleteOneChar()
 	{
-		let vc = SqlViewController()
+		guard let vc : SqlViewController = sqlVc
+			else
+		{
+			XCTFail()
+			return
+		}
+
 		XCTAssertEqual(Range<Int>(0..<0), vc.currentStatement.statementRange)
 		vc.updateSqlStatements(processedText : "drop", editedRange : Range(0..<4), lastDelta : 4)
 
@@ -77,7 +106,13 @@ class SqlEditTests: XCTestCase
 
 	func testDeleteMultipleChar()
 	{
-		let vc = SqlViewController()
+		guard let vc : SqlViewController = sqlVc
+			else
+		{
+			XCTFail()
+			return
+		}
+
 		XCTAssertEqual(Range<Int>(0..<0), vc.currentStatement.statementRange)
 		vc.updateSqlStatements(processedText : "dropped", editedRange : Range<Int>(0..<7), lastDelta : 7)
 
@@ -99,7 +134,13 @@ class SqlEditTests: XCTestCase
 
 	func testTypeOneWord()
 	{
-		let vc = SqlViewController()
+		guard let vc : SqlViewController = sqlVc
+			else
+		{
+			XCTFail()
+			return
+		}
+
 		XCTAssertEqual(Range<Int>(0..<0), vc.currentStatement.statementRange)
 		vc.updateSqlStatements(processedText : "select", editedRange : Range<Int>(0..<6), lastDelta : 6)
 
@@ -113,7 +154,13 @@ class SqlEditTests: XCTestCase
 
 	func testTypeMultipleWords()
 	{
-		let vc = SqlViewController()
+		guard let vc : SqlViewController = sqlVc
+			else
+		{
+			XCTFail()
+			return
+		}
+
 		XCTAssertEqual(Range<Int>(0..<0), vc.currentStatement.statementRange)
 		vc.updateSqlStatements(processedText : "select", editedRange : Range<Int>(0..<6), lastDelta : 6)
 
@@ -131,7 +178,13 @@ class SqlEditTests: XCTestCase
 
 	func testDeleteWord()
 	{
-		let vc = SqlViewController()
+		guard let vc : SqlViewController = sqlVc
+			else
+		{
+			XCTFail()
+			return
+		}
+
 		XCTAssertEqual(Range<Int>(0..<0), vc.currentStatement.statementRange)
 
 		vc.updateSqlStatements(processedText: "select * from TestTable;", editedRange: Range<Int>(0..<24), lastDelta: 24)
@@ -152,7 +205,13 @@ class SqlEditTests: XCTestCase
 
 	func testPartialWordDelete()
 	{
-		let vc = SqlViewController()
+		guard let vc : SqlViewController = sqlVc
+			else
+		{
+			XCTFail()
+			return
+		}
+
 		XCTAssertEqual(Range<Int>(0..<0), vc.currentStatement.statementRange)
 
 		vc.updateSqlStatements(processedText: "select * from TestTable;", editedRange: Range<Int>(0..<24), lastDelta: 24)
@@ -173,7 +232,13 @@ class SqlEditTests: XCTestCase
 
 	func testMidStreamInsert()
 	{
-		let vc = SqlViewController()
+		guard let vc : SqlViewController = sqlVc
+			else
+		{
+			XCTFail()
+			return
+		}
+
 		XCTAssertEqual(Range<Int>(0..<0), vc.currentStatement.statementRange)
 
 		vc.updateSqlStatements(processedText: "select * from TestTable;", editedRange: Range<Int>(0..<24), lastDelta: 24)

@@ -23,7 +23,7 @@ class SqlStatement : Hashable
 		return wordList.count
 	}
 
-	var lastWord  = SqlWord(word : "", wordRange : Range<Int>(NSMakeRange(0, 0))!, foundInList : false)
+	var lastWord  = SqlWord(word : "", wordRange : Range<Int>(0...0), foundInList : false)
 	var isNewWord : Bool = false
 
 	var wordList = [SqlWord]()
@@ -33,7 +33,7 @@ class SqlStatement : Hashable
 	init(statement : String)
 	{
 		statementText = statement
-		statementRange = Range<Int>(NSMakeRange(0, 0))!
+		statementRange = Range<Int>(0...0)
 		isComplete = false
 		delimitingSet.insert(charactersIn: ";")
 	}

@@ -52,20 +52,20 @@ class SqlEditTests: XCTestCase
 			return
 		}
 
-		XCTAssertEqual(Range<Int>(0..<0), vc.currentStatement.statementRange)
-		vc.updateSqlStatements(processedText : "s", editedRange : Range<Int>(0..<1), lastDelta : 1)
+		XCTAssertEqual(0..<0, vc.currentStatement.statementRange)
+		vc.updateSqlStatements(processedText : "s", editedRange : 0..<1, lastDelta : 1)
 		XCTAssertEqual(vc.currentStatement.statementText.count, 1)
-		vc.updateSqlStatements(processedText : "se", editedRange : Range<Int>(1..<2), lastDelta : 1)
+		vc.updateSqlStatements(processedText : "se", editedRange : 1..<2, lastDelta : 1)
 		XCTAssertEqual(vc.currentStatement.statementText.count, 2)
-		vc.updateSqlStatements(processedText : "sel", editedRange : Range<Int>(2..<3), lastDelta : 1)
+		vc.updateSqlStatements(processedText : "sel", editedRange : 2..<3, lastDelta : 1)
 		XCTAssertEqual(vc.currentStatement.statementText.count, 3)
-		vc.updateSqlStatements(processedText : "sele", editedRange : Range<Int>(3..<4), lastDelta : 1)
+		vc.updateSqlStatements(processedText : "sele", editedRange : 3..<4, lastDelta : 1)
 		XCTAssertEqual(vc.currentStatement.statementText.count, 4)
-		vc.updateSqlStatements(processedText : "selec", editedRange : Range(4..<5), lastDelta : 1)
+		vc.updateSqlStatements(processedText : "selec", editedRange : 4..<5, lastDelta : 1)
 		XCTAssertEqual(vc.currentStatement.statementText.count, 5)
-		vc.updateSqlStatements(processedText : "select", editedRange : Range<Int>(5..<6), lastDelta : 1)
+		vc.updateSqlStatements(processedText : "select", editedRange : 5..<6, lastDelta : 1)
 		XCTAssertEqual(vc.currentStatement.statementText.count, 6)
-		XCTAssertEqual(Range(0..<6), vc.currentStatement.statementRange)
+		XCTAssertEqual(0..<6, vc.currentStatement.statementRange)
 	}
 
 	func testTypeMultipleCharBurst()
@@ -77,11 +77,11 @@ class SqlEditTests: XCTestCase
 			return
 		}
 
-		XCTAssertEqual(Range<Int>(0..<0), vc.currentStatement.statementRange)
-		vc.updateSqlStatements(processedText : "select", editedRange : Range(0..<6), lastDelta : 6)
+		XCTAssertEqual(0..<0, vc.currentStatement.statementRange)
+		vc.updateSqlStatements(processedText : "select", editedRange : 0..<6, lastDelta : 6)
 
 		XCTAssertEqual(vc.currentStatement.statementText.count, 6)
-		XCTAssertEqual(Range<Int>(0..<6), vc.currentStatement.statementRange)
+		XCTAssertEqual(0..<6, vc.currentStatement.statementRange)
 	}
 
 	func testDeleteOneChar()
@@ -93,15 +93,15 @@ class SqlEditTests: XCTestCase
 			return
 		}
 
-		XCTAssertEqual(Range<Int>(0..<0), vc.currentStatement.statementRange)
-		vc.updateSqlStatements(processedText : "drop", editedRange : Range(0..<4), lastDelta : 4)
+		XCTAssertEqual(0..<0, vc.currentStatement.statementRange)
+		vc.updateSqlStatements(processedText : "drop", editedRange : 0..<4, lastDelta : 4)
 
 		XCTAssertEqual(vc.currentStatement.statementText.count, 4)
-		XCTAssertEqual(Range<Int>(0..<4), vc.currentStatement.statementRange)
+		XCTAssertEqual(0..<4, vc.currentStatement.statementRange)
 
-		vc.updateSqlStatements(processedText : "dro", editedRange : Range<Int>(3..<3), lastDelta : -1)
+		vc.updateSqlStatements(processedText : "dro", editedRange : 3..<3, lastDelta : -1)
 		XCTAssertEqual(vc.currentStatement.statementText.count, 3)
-		XCTAssertEqual(Range<Int>(0..<3), vc.currentStatement.statementRange)
+		XCTAssertEqual(0..<3, vc.currentStatement.statementRange)
 	}
 
 	func testDeleteMultipleChar()
@@ -113,23 +113,23 @@ class SqlEditTests: XCTestCase
 			return
 		}
 
-		XCTAssertEqual(Range<Int>(0..<0), vc.currentStatement.statementRange)
-		vc.updateSqlStatements(processedText : "dropped", editedRange : Range<Int>(0..<7), lastDelta : 7)
+		XCTAssertEqual(0..<0, vc.currentStatement.statementRange)
+		vc.updateSqlStatements(processedText : "dropped", editedRange : 0..<7, lastDelta : 7)
 
 		XCTAssertEqual(vc.currentStatement.statementText.count, 7)
-		XCTAssertEqual(Range<Int>(0..<7), vc.currentStatement.statementRange)
+		XCTAssertEqual(0..<7, vc.currentStatement.statementRange)
 
-		vc.updateSqlStatements(processedText : "droppe", editedRange : Range<Int>(6..<6), lastDelta : -1)
+		vc.updateSqlStatements(processedText : "droppe", editedRange : 6..<6, lastDelta : -1)
 		XCTAssertEqual(vc.currentStatement.statementText.count, 6)
-		XCTAssertEqual(Range<Int>(0..<6), vc.currentStatement.statementRange)
+		XCTAssertEqual(0..<6, vc.currentStatement.statementRange)
 
-		vc.updateSqlStatements(processedText : "dropp", editedRange : Range<Int>(5..<5), lastDelta : -1)
+		vc.updateSqlStatements(processedText : "dropp", editedRange : 5..<5, lastDelta : -1)
 		XCTAssertEqual(vc.currentStatement.statementText.count, 5)
-		XCTAssertEqual(Range<Int>(0..<5), vc.currentStatement.statementRange)
+		XCTAssertEqual(0..<5, vc.currentStatement.statementRange)
 
-		vc.updateSqlStatements(processedText : "drop", editedRange : Range<Int>(4..<4), lastDelta : -1)
+		vc.updateSqlStatements(processedText : "drop", editedRange : 4..<4, lastDelta : -1)
 		XCTAssertEqual(vc.currentStatement.statementText.count, 4)
-		XCTAssertEqual(Range<Int>(0..<4), vc.currentStatement.statementRange)
+		XCTAssertEqual(0..<4, vc.currentStatement.statementRange)
 	}
 
 	func testTypeOneWord()
@@ -141,14 +141,14 @@ class SqlEditTests: XCTestCase
 			return
 		}
 
-		XCTAssertEqual(Range<Int>(0..<0), vc.currentStatement.statementRange)
-		vc.updateSqlStatements(processedText : "select", editedRange : Range<Int>(0..<6), lastDelta : 6)
+		XCTAssertEqual(0..<0, vc.currentStatement.statementRange)
+		vc.updateSqlStatements(processedText : "select", editedRange : 0..<6, lastDelta : 6)
 
 		XCTAssertEqual(vc.currentStatement.statementText.count, 6)
-		XCTAssertEqual(Range<Int>(0..<6), vc.currentStatement.statementRange)
+		XCTAssertEqual(0..<6, vc.currentStatement.statementRange)
 
-		vc.updateSqlStatements(processedText : "select ", editedRange : Range<Int>(6..<7), lastDelta : 1)
-		XCTAssertEqual(Range<Int>(0..<7), vc.currentStatement.statementRange)
+		vc.updateSqlStatements(processedText : "select ", editedRange : 6..<7, lastDelta : 1)
+		XCTAssertEqual(0..<7, vc.currentStatement.statementRange)
 		XCTAssertEqual(1, vc.currentStatement.wordCount)
 	}
 
@@ -161,18 +161,18 @@ class SqlEditTests: XCTestCase
 			return
 		}
 
-		XCTAssertEqual(Range<Int>(0..<0), vc.currentStatement.statementRange)
-		vc.updateSqlStatements(processedText : "select", editedRange : Range<Int>(0..<6), lastDelta : 6)
+		XCTAssertEqual(0..<0, vc.currentStatement.statementRange)
+		vc.updateSqlStatements(processedText : "select", editedRange : 0..<6, lastDelta : 6)
 
 		XCTAssertEqual(vc.currentStatement.statementText.count, 6)
-		XCTAssertEqual(Range<Int>(0..<6), vc.currentStatement.statementRange)
+		XCTAssertEqual(0..<6, vc.currentStatement.statementRange)
 
-		vc.updateSqlStatements(processedText : "select ", editedRange : Range<Int>(6..<7), lastDelta : 1)
-		XCTAssertEqual(Range<Int>(0..<7), vc.currentStatement.statementRange)
+		vc.updateSqlStatements(processedText : "select ", editedRange : 6..<7, lastDelta : 1)
+		XCTAssertEqual(0..<7, vc.currentStatement.statementRange)
 		XCTAssertEqual(1, vc.currentStatement.wordCount)
 
-		vc.updateSqlStatements(processedText: "select * ", editedRange: Range(7..<9), lastDelta: 2)
-		XCTAssertEqual(Range<Int>(0..<9), vc.currentStatement.statementRange)
+		vc.updateSqlStatements(processedText: "select * ", editedRange: 7..<9, lastDelta: 2)
+		XCTAssertEqual(0..<9, vc.currentStatement.statementRange)
 		XCTAssertEqual(2, vc.currentStatement.wordCount)
 	}
 
@@ -185,20 +185,20 @@ class SqlEditTests: XCTestCase
 			return
 		}
 
-		XCTAssertEqual(Range<Int>(0..<0), vc.currentStatement.statementRange)
+		XCTAssertEqual(0..<0, vc.currentStatement.statementRange)
 
-		vc.updateSqlStatements(processedText: "select * from TestTable;", editedRange: Range<Int>(0..<24), lastDelta: 24)
-		XCTAssertEqual(Range<Int>(0..<24), vc.currentStatement.statementRange)
+		vc.updateSqlStatements(processedText: "select * from TestTable;", editedRange: 0..<24, lastDelta: 24)
+		XCTAssertEqual(0..<24, vc.currentStatement.statementRange)
 		XCTAssertEqual(vc.currentStatement.statementText.count, 24)
 		XCTAssertEqual(vc.currentStatement.wordCount, 4)
 
-		vc.updateSqlStatements(processedText: "select * from ", editedRange: Range(0..<14), lastDelta: -10)
-		XCTAssertEqual(Range<Int>(0..<14), vc.currentStatement.statementRange)
+		vc.updateSqlStatements(processedText: "select * from ", editedRange: 0..<14, lastDelta: -10)
+		XCTAssertEqual(0..<14, vc.currentStatement.statementRange)
 		XCTAssertEqual(vc.currentStatement.statementText.count, 14)
 		XCTAssertEqual(vc.currentStatement.wordCount, 3)
 
-		vc.updateSqlStatements(processedText: "select * ", editedRange: Range<Int>(0..<9), lastDelta: -5)
-		XCTAssertEqual(Range<Int>(0..<9), vc.currentStatement.statementRange)
+		vc.updateSqlStatements(processedText: "select * ", editedRange: 0..<9, lastDelta: -5)
+		XCTAssertEqual(0..<9, vc.currentStatement.statementRange)
 		XCTAssertEqual(vc.currentStatement.statementText.count, 9)
 		XCTAssertEqual(vc.currentStatement.wordCount, 2)
 	}
@@ -212,20 +212,20 @@ class SqlEditTests: XCTestCase
 			return
 		}
 
-		XCTAssertEqual(Range<Int>(0..<0), vc.currentStatement.statementRange)
+		XCTAssertEqual(0..<0, vc.currentStatement.statementRange)
 
-		vc.updateSqlStatements(processedText: "select * from TestTable;", editedRange: Range<Int>(0..<24), lastDelta: 24)
-		XCTAssertEqual(Range<Int>(0..<24), vc.currentStatement.statementRange)
+		vc.updateSqlStatements(processedText: "select * from TestTable;", editedRange: 0..<24, lastDelta: 24)
+		XCTAssertEqual(0..<24, vc.currentStatement.statementRange)
 		XCTAssertEqual(vc.currentStatement.statementText.count, 24)
 		XCTAssertEqual(vc.currentStatement.wordCount, 4)
 
-		vc.updateSqlStatements(processedText: "select * from Test", editedRange: Range<Int>(0..<18), lastDelta: -6)
-		XCTAssertEqual(Range<Int>(0..<18), vc.currentStatement.statementRange)
+		vc.updateSqlStatements(processedText: "select * from Test", editedRange: 0..<18, lastDelta: -6)
+		XCTAssertEqual(0..<18, vc.currentStatement.statementRange)
 		XCTAssertEqual(vc.currentStatement.statementText.count, 18)
 		XCTAssertEqual(vc.currentStatement.wordCount, 3)
 
-		vc.updateSqlStatements(processedText: "select * fr", editedRange: Range<Int>(0..<11), lastDelta: -7)
-		XCTAssertEqual(Range<Int>(0..<11), vc.currentStatement.statementRange)
+		vc.updateSqlStatements(processedText: "select * fr", editedRange: 0..<11, lastDelta: -7)
+		XCTAssertEqual(0..<11, vc.currentStatement.statementRange)
 		XCTAssertEqual(vc.currentStatement.statementText.count, 11)
 		XCTAssertEqual(vc.currentStatement.wordCount, 2)
 	}
@@ -241,11 +241,11 @@ class SqlEditTests: XCTestCase
 
 		XCTAssertEqual(Range<Int>(0..<0), vc.currentStatement.statementRange)
 
-		vc.updateSqlStatements(processedText: "select * from TestTable;", editedRange: Range<Int>(0..<24), lastDelta: 24)
-		XCTAssertEqual(Range<Int>(0..<24), vc.currentStatement.statementRange)
+		vc.updateSqlStatements(processedText: "select * from TestTable;", editedRange: 0..<24, lastDelta: 24)
+		XCTAssertEqual(0..<24, vc.currentStatement.statementRange)
 		XCTAssertEqual(vc.currentStatement.statementText.count, 24)
 		XCTAssertEqual(vc.currentStatement.wordCount, 4)
 
-		vc.updateSqlStatements(processedText: "select t from TestTable;", editedRange: Range<Int>(7..<8), lastDelta: 0)
+		vc.updateSqlStatements(processedText: "select t from TestTable;", editedRange: 7..<8, lastDelta: 0)
 	}
 }

@@ -72,7 +72,13 @@ class SqlViewController: NSViewController, NSTextStorageDelegate
 
 			if currentStatement.isNewWord
 			{
-				if currentStatement.lastWord.foundInList
+				guard let currentWord : SqlWord = currentStatement.lastWord
+				else
+				{
+					return
+				}
+
+				if currentWord.foundInList
 				{
 					// TODO: Change the text colour here
 				}

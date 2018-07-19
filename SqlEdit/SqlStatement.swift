@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os.log
 
 /// Holds and maintains a single SQL statement.
 /// Any sequence of characters terminated by a semi-colon qualifies as a statement,
@@ -16,6 +17,8 @@ class SqlStatement
 	fileprivate let spaceSymbol : Character = " "
 	fileprivate let terminatorSymbol : Character = ";"
 
+	let logHandle = OSLog(subsystem: "eu.hoggatt.SqlEdit", category: "SqlStatement")
+
 	/// The raw text of the statement.
 	var statementText : String
 
@@ -24,11 +27,14 @@ class SqlStatement
 
 	/// true = The statement ends in a semi-colon, otherwise false.
 	var isComplete : Bool
+	{
+		return statementText.hasSuffix(String(terminatorSymbol))
+	}
 
 	/// true = The statement is an empty string, otherwise false.
 	var isEmpty : Bool
 	{
-		return statementText.count <= 0
+		return statementText.isEmpty
 	}
 
 	/// The numbers of SQL words that the statement contains.
@@ -58,53 +64,12 @@ class SqlStatement
 	{
 		statementText = ""
 		statementRange = 0..<0
-		isComplete = false
 		delimitingSet.insert(charactersIn: String(terminatorSymbol))
 		unwordedStartIdx = statementText.startIndex
 		lastWordUpperBound = 0
 
 		appendChrsToStatement(nextChars: statement, withRange: 0..<statement.count)
 	}
-
-	/// Adds the given characters to the statement and adjusts the word content accordingly.
-	///
-	/// - Parameters:
-	///   - nextChars: The characters to add.
-	///   - withRange: The range co-ordinates indicating where the characters are to be placed.
-	public func addCharactersToStatement(nextChars : String, withRange : Range<Int>)
-	{
-		var chRange : Range<Int> = withRange.lowerBound..<withRange.lowerBound
-		var chRangeUpper : Int = chRange.upperBound
-		let statCount = statementText.count
-		for ch : Character in nextChars
-		{
-			if chRangeUpper < statCount
-			{
-				statementText.insert(ch, at: statementText.index(statementText.startIndex, offsetBy: chRangeUpper))
-			}
-			else
-			{
-				statementText.append(ch)
-			}
-			chRangeUpper += 1
-			chRange = chRange.lowerBound..<chRangeUpper
-			switch ch
-			{
-			case ";":
-				isComplete = true
-				chRange = completeWord(chRange)
-
-			case " ":
-				chRange = completeWord(chRange)
-
-			default:
-				isNewWord = false
-			}
-		}
-
-		statementRange = statementRange.lowerBound..<(withRange.lowerBound + withRange.count)
-	}
-
 
 	/// Handles the standard case of appending text to the current statement. It compiles word objects
 	///		and checks them against known words.
@@ -124,13 +89,22 @@ class SqlStatement
 			return
 		}
 
+		let statementLowerBound : Int
 		if statementText.isEmpty
 		{
 			unwordedStartIdx = statementText.startIndex
 			lastWordUpperBound = withRange.lowerBound
+			statementLowerBound = withRange.lowerBound
+		}
+		else
+		{
+			statementLowerBound = statementRange.lowerBound
 		}
 
 		statementText.append(nextChars)
+		let statementUpperBound : Int = statementLowerBound + statementText.count
+		statementRange = statementLowerBound..<statementUpperBound
+
 		if nextChars.contains(spaceSymbol)
 		{
 			if nextChars.count == 1
@@ -175,8 +149,6 @@ class SqlStatement
 				completeWord(byAppendingText: String(wordSet[0]), startingIdx: withRange.lowerBound, expectedSymbol: spaceSymbol)
 			}
 		}
-
-		isComplete = statementText.hasSuffix(";")
 	}
 
 	/// Removes characters from the end of the statement.
@@ -215,9 +187,44 @@ class SqlStatement
 		return true
 	}
 
-	public func updateCharactersInStatement(nextChars : String, withRange : NSRange)
+	public func deleteCharactersFromStatement(editedRange : Range<Int>, lastDelta : Int)
 	{
-		
+		guard lastDelta < 0
+		else
+		{
+			return
+		}
+
+		let dropCount = lastDelta * -1
+		statementText = String(statementText.dropLast(dropCount))
+		lastWordUpperBound -= dropCount
+		unwordedStartIdx = statementText.endIndex
+
+		let belongsIdx : Int = wordList.partition
+		{ (sampleWord : SqlWord) -> Bool in
+			return sampleWord.wordRange.lowerBound > lastWordUpperBound
+		}
+
+		let removeCount = wordList.count - belongsIdx
+		if removeCount > 0
+		{
+			wordList.removeFirst(removeCount)
+		}
+
+		if statementText.hasSuffix(String(spaceSymbol))
+		{
+			return
+		}
+
+		guard let endWord : SqlWord = wordList.last
+		else
+		{
+			os_log("End word not found in word list.", log: logHandle, type: .error)
+			return
+		}
+
+		unwordedStartIdx = endWord.statementStartIdx
+		wordList.removeLast()
 	}
 
 	fileprivate func completeWord(byAppendingText : String, startingIdx : Int,  expectedSymbol : Character)
@@ -239,39 +246,11 @@ class SqlStatement
 		let foundWord = LanguageProcessor.Instance().IsWordFound(refWord: reformedWord)
 
 		let rangeEnd : Int = lastWordUpperBound + wordText.count
-		let newWord = SqlWord(word: reformedWord, wordRange: lastWordUpperBound..<rangeEnd, foundInList: foundWord)
+		let newWord = SqlWord(word: reformedWord, wordRange: lastWordUpperBound..<rangeEnd, foundInList: foundWord, statementStartIdx: unwordedStartIdx, statementEndIdx: wordEnd)
 		wordList.append(newWord)
 
 		lastWordUpperBound = newWord.wordRange.upperBound + 1
 		unwordedStartIdx = statementText.index(after: wordEnd)
-	}
-
-	fileprivate func createNewWord(fromRange : Range<Int>) -> SqlWord
-	{
-		let wordStartPos : Int = fromRange.lowerBound
-		// Reduce by the delimiter
-		var wordLength : Int = fromRange.count - 1
-		var wordRange : Range<Int> = wordStartPos..<(wordStartPos + wordLength)
-		let wordTextStartIdx : String.Index = statementText.index(statementText.startIndex, offsetBy: wordStartPos)
-		let wordText : String = statementText[wordTextStartIdx..<statementText.endIndex].trimmingCharacters(in: delimitingSet)
-
-		wordLength = wordText.count
-		wordRange = wordStartPos..<(wordStartPos + wordLength)
-
-		let langProc : LanguageProcessor = LanguageProcessor.Instance()
-		let isInList : Bool = langProc.IsWordFound(refWord: wordText)
-
-		let nextWord = SqlWord(word : wordText, wordRange : wordRange, foundInList : isInList)
-
-		return nextWord
-	}
-
-	fileprivate func completeWord(_ chRange: Range<Int>) -> Range<Int>
-	{
-		let currentWord = createNewWord(fromRange: chRange)
-		wordList.append(currentWord)
-		isNewWord = true
-		return pinNextRange(sourceRange: chRange)
 	}
 
 	fileprivate func pinNextRange(sourceRange : Range<Int>) -> Range<Int>

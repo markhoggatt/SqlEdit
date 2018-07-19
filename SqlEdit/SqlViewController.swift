@@ -57,7 +57,7 @@ class SqlViewController: NSViewController, NSTextStorageDelegate
 		if lastDelta < 0
 		{
 			let removedOk : Bool = currentStatement.removeCharacterFromStatement(droppingLast: lastDelta)
-			if removedOk
+			if removedOk == false
 			{
 				os_log("Failed to remove characters from statement.")
 			}
@@ -68,7 +68,7 @@ class SqlViewController: NSViewController, NSTextStorageDelegate
 			let newCharsEndIdx : String.Index = processedText.index(newCharsStartIdx, offsetBy: lastDelta)
 			let newChars : String = String(processedText[newCharsStartIdx..<newCharsEndIdx])
 
-			currentStatement.addCharactersToStatement(nextChars: newChars, withRange: editedRange)
+			currentStatement.appendChrsToStatement(nextChars: newChars, withRange: editedRange)
 
 			if currentStatement.isNewWord
 			{

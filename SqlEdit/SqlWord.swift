@@ -19,4 +19,10 @@ struct SqlWord
 
 	/// Indicates whether or not this word is found in the SQL command or key word lists.
 	public let foundInList : Bool
+
+	/// The start index of this substring
+	public let statementStartIdx : String.Index
+
+	/// The end index of this substring
+	public let statementEndIdx : String.Index
 }

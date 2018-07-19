@@ -177,6 +177,44 @@ class SqlStatementTests: XCTestCase
 		XCTAssertEqual(statement.lastWord!.wordRange, 36..<39)
 	}
 
+	func testDeleteCharacter()
+	{
+		let statement = SqlStatement(statement: "")
+		statement.appendChrsToStatement(nextChars: "select * from ", withRange: 0..<14)
+		statement.deleteCharactersFromStatement(editedRange: 13..<13, lastDelta: -1)
+		XCTAssertEqual(statement.statementText.count, 13)
+		XCTAssertEqual(statement.wordCount, 2)
+	}
+
+	func testDeleteMultipleCharacters()
+	{
+		let statement = SqlStatement(statement: "")
+		statement.appendChrsToStatement(nextChars: "select * from ", withRange: 0..<14)
+		statement.deleteCharactersFromStatement(editedRange: 11..<11, lastDelta: -3)
+		XCTAssertEqual(statement.statementText.count, 11)
+		XCTAssertEqual(statement.wordCount, 2)
+	}
+
+	func testDeleteAddOrthogonality()
+	{
+		let statement = SqlStatement(statement: "")
+		statement.appendChrsToStatement(nextChars: "select * from ", withRange: 0..<14)
+		statement.deleteCharactersFromStatement(editedRange: 11..<11, lastDelta: -3)
+		statement.appendChrsToStatement(nextChars: "om ", withRange: 11..<14)
+		XCTAssertEqual(statement.statementText.count, 14)
+		XCTAssertEqual(statement.wordCount, 3)
+	}
+
+	func testDeleteAddOrthogonalityWordCheck()
+	{
+		let statement = SqlStatement(statement: "")
+		statement.appendChrsToStatement(nextChars: "select * from ", withRange: 0..<14)
+		statement.deleteCharactersFromStatement(editedRange: 11..<11, lastDelta: -3)
+		statement.appendChrsToStatement(nextChars: "om ", withRange: 11..<14)
+		XCTAssertEqual(statement.lastWord!.word, "from")
+		XCTAssertTrue(statement.lastWord!.foundInList)
+	}
+
     func testPerformanceExample()
 	{
         // This is an example of a performance test case.
